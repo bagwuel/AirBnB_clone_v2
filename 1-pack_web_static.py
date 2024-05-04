@@ -3,7 +3,7 @@
 from fabric.decorators import task
 from fabric.api import local
 from datetime import datetime
-
+import os
 
 @task
 def do_pack():
@@ -20,6 +20,8 @@ def do_pack():
         
         # Compress the contents of the web_static folder into the archive
         local("tar -cvzf versions/{} web_static".format(archive_name))
+
+        print("web_static packed: versions/{} -> {}Bytes".format(archive_name, os.path.getsize("versions/{}".format(archive_name))))
         
         # Return the path to the generated archive
         return "versions/{}".format(archive_name)
